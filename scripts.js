@@ -86,7 +86,6 @@ console.assert(
   "shortest: skilar stysta orði í streng"
 );
 
-
 function reverse(str) {
   if (isString(str)) {
     const split = str.split("");
@@ -135,16 +134,92 @@ console.assert(
 );
 
 function vowels(str) {
-  // Útfæra
+  if (isString(str)) {
+    const chars = str.toLowerCase().split("");
+    let vowelCount = chars.filter((char) => VOWELS.includes(char)).length;
+    return vowelCount;
+  }
+  return 0;
 }
+console.assert(
+  vowels("halló") === 2,
+  "vowels: skilar fjölda sérhljóða í streng"
+);
+console.assert(
+  vowels("bcd") === 0,
+  "vowels: skilar 0 ef að engir sérhljóðar eru í streng"
+);
+console.assert(
+  vowels(false) === 0,
+  "vowels: skilar 0 ef að str er ekki strengur"
+);
 
 function consonants(str) {
-  // Útfæra
+  if (isString(str)) {
+    const chars = str.toLowerCase().split("");
+    let consonantsCount = chars.filter((char) =>
+      CONSONANTS.includes(char)
+    ).length;
+    return consonantsCount;
+  }
+  return 0;
 }
+console.assert(
+  consonants("halló") === 3,
+  "consonants: skilar fjölda samhljóða í streng"
+);
+console.assert(
+  consonants("aáo") === 0,
+  "consonants: skilar 0 ef að engir samhljóðar eru í streng"
+);
+console.assert(
+  consonants(false) === 0,
+  "consonants: skilar 0 ef að str er ekki strengur"
+);
 
 //------------------------------------------------------------------------------
 // Leiðbeint ferli
 
 function start() {
-  // Útfæra
+  alert(
+    "Leiðbeiningar:\nSláðu inn streng til að sjá lengsta og stysta orðið í strengnum, strenginn öfugan, hvort að strengurinn sé samhverfur og fjölda sérhljóða og fjölda samhljóð í strengnum."
+  );
+
+ let redo = true;
+  while (redo) {
+    const input = prompt("Sláðu inn streng:");
+
+    if (input === null || input.trim() === "") {
+      console.info("Hætt við eða ekkert inntak veitt.");
+      return; 
+    }
+
+    try {
+      const longestWord = longest(input);
+      const shortestWord = shortest(input);
+      const reversedStr = reverse(input);
+      const vowelCount = vowels(input);
+      const consonantCount = consonants(input);
+      const isPalindrome = palindrome(input);
+
+      alert(
+        `Niðurstöður fyrir "${input}":\n` +
+        `Lengsta orðið: ${longestWord}\n` +
+        `Stysta orðið: ${shortestWord}\n` +
+        `Öfugur: ${reversedStr}\n` +
+        `Fjöldi sérhljóða: ${vowelCount}\n` +
+        `Fjöldi samhljóða: ${consonantCount}\n` +
+        `Er strengur samhverfur: ${isPalindrome}`
+      );
+
+      console.info(`Það tókst að reikna niðurstöður fyrir "${input}".`);
+
+    } catch (error) {
+      console.error("Villa: ", error);
+    }
+
+    redo = confirm("Vilt þú prófa aftur?");
+  }
+
 }
+
