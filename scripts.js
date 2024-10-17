@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 // Fastar
 
-/** Íslenskir sérhljóðar */
-const CONSONANTS = 'bcdfghjklmnpqrstvwxz'.split('');
-
 /** Íslenskir samhljóðar */
-const VOWELS = 'aeiouyáéýúíóöæ'.split('');
+const CONSONANTS = "bcdfghjklmnpqrstvwxz".split("");
+
+/** Íslenskir sérhljóðar */
+const VOWELS = "aeiouyáéýúíóöæ".split("");
 
 //------------------------------------------------------------------------------
 // Hjálparföll
@@ -23,12 +23,12 @@ const VOWELS = 'aeiouyáéýúíóöæ'.split('');
  * @returns `true` ef `str` er strengur, annars `false`.
  */
 // Skilgreinum anonymous fall og bindum við breytuna `isString`
-const isString = (str) => typeof str === 'string';
+const isString = (str) => typeof str === "string";
 
 // Prófum fallið
-console.assert(isString('hi') === true, 'isString: skilar `true` fyrir streng');
-console.assert(isString(42) === false, 'isString: skilar `false` fyrir tölu');
-console.assert(isString(null) === false, 'isString: skilar `false` fyrir null');
+console.assert(isString("hi") === true, "isString: skilar `true` fyrir streng");
+console.assert(isString(42) === false, "isString: skilar `false` fyrir tölu");
+console.assert(isString(null) === false, "isString: skilar `false` fyrir null");
 
 /**
  * Öruggt fall sem skilar fylki af strengjum úr gefnum streng, skipt upp með
@@ -37,7 +37,7 @@ console.assert(isString(null) === false, 'isString: skilar `false` fyrir null');
  * @returns {string[]} Fylki af strengjum eða tóma fylkið ef afmarkari kom
  * ekki fram.
  */
-function split(str, separator = ' ') {
+function split(str, separator = " ") {
   if (!isString(str)) {
     return [];
   }
@@ -49,20 +49,90 @@ function split(str, separator = ' ') {
 // Grunnföll sem skilgreina á
 
 function longest(str) {
-  // Útfæra
+  if (isString(str)) {
+    const split = str.split(" ");
+    let longestWord = "";
+
+    for (const word of split) {
+      if (word.length > longestWord.length) {
+        longestWord = word;
+      }
+    }
+    return longestWord;
+  }
+  return null;
 }
+console.assert(
+  longest("Halló ég heiti Dagbjört") === "Dagbjört",
+  "longest: skilar lengsta orði í streng"
+);
 
 function shortest(str) {
-  // Útfæra
+  if (isString(str)) {
+    const split = str.split(" ");
+    let shortestWord = split[0];
+
+    for (const word of split) {
+      if (word.length < shortestWord.length) {
+        shortestWord = word;
+      }
+    }
+    return shortestWord;
+  }
+  return null;
 }
+console.assert(
+  shortest("Halló ég heiti Dagbjört") === "ég",
+  "shortest: skilar stysta orði í streng"
+);
+
 
 function reverse(str) {
-  // Útfæra
+  if (isString(str)) {
+    const split = str.split("");
+    const reversed = split.reverse();
+
+    return reversed.join("");
+  }
+  return null;
 }
+console.assert(
+  reverse("halló") === "óllah",
+  "reverse: snýr við einföldum streng"
+);
+console.assert(
+  reverse(false) === null,
+  "reverse: ef ekki strengur, skila null"
+);
 
 function palindrome(str) {
-  // Útfæra
+  if (isString(str) && str !== "") {
+    const reversed = reverse(str);
+    if (str.toLowerCase() === reversed.toLowerCase()) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
 }
+console.assert(
+  palindrome("anna") === true,
+  "palindrome: skilar true ef strengur er samhverfur"
+);
+console.assert(
+  palindrome("halló") === false,
+  "palindrome: skilar false ef strengur er ekki samhverfur"
+);
+console.assert(
+  palindrome(false) === false,
+  "palindrome: skilar false ef strengur er ekki strengur"
+);
+console.assert(
+  palindrome("") === false,
+  "palindrome: skilar false ef strengur er tómur"
+);
 
 function vowels(str) {
   // Útfæra
